@@ -1,0 +1,62 @@
+.header {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #000000;
+  padding-left: 5px;
+  padding-bottom: 10px;
+  border-bottom: solid 2px #000;
+}
+
+.body {
+  display: flex;
+  color: rgb(0, 0, 0);
+  margin-left: 30px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  font-size: large;
+  // min-height: 245px;
+}
+
+.attachmentDesc {
+  font-size: x-small;
+  margin-top: 1%;
+}
+
+.file {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid black;
+  font-size: 50%;
+  width: 85%;
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  button {
+    border-radius: 2px;
+    font-size: 15px;
+    box-shadow: none;
+    width: 129px;
+    height: 35px;
+    text-align: center;
+  }
+  button.white {
+    border: 1pt solid rgb(0, 0, 0);
+    color: rgb(0, 0, 0);
+    // margin: 20px;
+    background-color: rgb(255, 255, 255);
+  }
+  button.black {
+    background-color: black;
+    color: rgb(255, 255, 255);
+    // margin: 20px;
+  }
+}
+
+mat-form-field {
+  width: 85%;
+  font-size: 60%;
+}

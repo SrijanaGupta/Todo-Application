@@ -1,0 +1,55 @@
+<div class="header">
+    {{ data.header }}
+</div>
+<div class="body">
+    <mat-form-field>
+        <mat-label style="font-weight: bold">Title</mat-label>
+        <input matInput (change)="enteredTitle($event)" value="{{ data.title }}" />
+    </mat-form-field>
+</div>
+<div class="body">
+    <mat-form-field>
+        <mat-label style="font-weight: bold">Description</mat-label>
+        <textarea matInput value="{{ data.desc }}" (change)="enteredDesc($event)"></textarea>
+    </mat-form-field>
+</div>
+<div class="body">
+    <input placeholder="Attachment" type="file" class="file" name="files[]"  multiple (change)="selectFile($event)" />
+    <div class="attachmentDesc">
+        <b>Total Files - {{ noOfAttachments }} </b>
+        <div [disabled]="true"  *ngFor="let element of fileNames" >
+            {{ element }}
+            <br />
+        </div>
+    </div>
+</div>
+<div class="body">
+    <mat-form-field>
+        <mat-label>Select Owner</mat-label>
+        <mat-select [(ngModel)]="data.taskOwner" multiple (selectionChange)="selectedOwners($event)">
+            <ng-container *ngFor="let d of ownerList">
+                <mat-option [value]="d">
+                    {{ d }}
+                </mat-option>
+                <mat-divider style="background-color: rgb(13, 24, 26)"></mat-divider>
+            </ng-container>
+        </mat-select>
+    </mat-form-field>
+</div>
+<div class="body">
+    <mat-form-field>
+        <mat-label style="font-weight: bold">Current Task State</mat-label>
+        <input matInput value="{{ data.taskState }}" [disabled]="true" />
+    </mat-form-field>
+</div>
+<div class="body">
+    <mat-form-field>
+        <mat-label style="font-weight: bold">Creation Date</mat-label>
+        <input matInput value="{{ data.creationDate | date: 'longDate' }}" [disabled]="true" />
+    </mat-form-field>
+</div>
+<mat-dialog-actions class="footer">
+    <button mat-raised-button class="black" (click)="close()" id="2">
+        Add/Update
+    </button>
+</mat-dialog-actions>

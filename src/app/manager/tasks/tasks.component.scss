@@ -1,0 +1,140 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.app-name {
+  font-size: 25px;
+  font-family: sans-serif;
+  font-weight: bold;
+}
+
+.has-gradient-text {
+  background: -webkit-linear-gradient(#13f7f4, #2af598);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.board {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+
+  //since flexitems cannot be smaller than the size of the content along the main axis,we need to
+  //override the default settings(min-width: auto; min-height: auto;) to custom
+  min-width: 0;
+  min-height: 0;
+
+  .board-bar {
+    background-color: rgba(gray, 0.5);
+    padding: 8px 15px;
+    display: flex;
+
+    .board-name {
+      font-weight: bold;
+      font-size: 20px;
+      color: white;
+    }
+
+    .taskButtons {
+      flex-grow: 1;
+
+      .task-button {
+        font-weight: bold;
+      }
+
+      .sort-button1 {
+        font-weight: bold;
+      }
+
+      .sort-button2 {
+        font-weight: bold;
+      }
+    }
+  }
+
+  .board-wrapper {
+    display: flex;
+    flex-grow: 1;
+    overflow-x: auto;
+
+    .board-columns {
+      display: flex;
+      flex-grow: 1;
+
+      .board-column {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        flex-basis: 0; //to force the columns to be of same size, irrespective of content
+        overflow-y: auto;
+
+        min-width: 300px;
+        margin: 15px;
+        padding: 25px;
+        border-radius: 4px;
+
+        background: rgba(white, 0.5);
+
+        &:not(:first-child) {
+          margin-left: 0;
+        }
+
+        .column-title {
+          font-size: 20px;
+          font-weight: bold;
+          font-family: sans-serif;
+          text-transform: uppercase;
+          margin-bottom: 20px;
+        }
+      }
+    }
+  }
+}
+
+.task-container {
+  flex-grow: 1;
+
+  .task {
+    padding: 15px 12px;
+    background: white;
+    border-bottom: solid 1px #ddd;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    //height:20%;
+
+    min-width: 0;
+    min-height: 0;
+
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.05),
+      0 3px 14px 2px rgba(0, 0, 0, 0.05);
+
+    .firstRow {
+      display: flex;
+    }
+
+    .itembutton {
+      flex-grow: 1;
+    }
+  }
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.task-container.cdk-drop-list-dragging .task:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}

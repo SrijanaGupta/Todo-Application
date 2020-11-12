@@ -1,0 +1,186 @@
+<!-- The navigation bar -->
+<div class="root">
+  <div class="navbar has-background-dark">
+    <div class="navbar-brand">
+      <div class="navbar-item">
+        <h1 class="app-name has-gradient-text">Workflow Manager</h1>
+      </div>
+    </div>
+  </div>
+
+  <!-- The board bar -->
+  <div class="board">
+    <div class="board-bar">
+      <div class="board-name is-left">Task Flow</div>
+      <div class="buttons has-addons is-right taskButtons">
+        <button class="button is-small task-button" (click)="addTask()">
+          <span class="icon is-small">
+            <i class="fa fa-plus-square"></i>
+          </span>
+          <span>Add Task</span>
+        </button>
+        <button class="button is-small sort-button1" (click)="sortbyDate()">
+          <span class="icon is-small">
+            <i class="fa fa-sort"></i>
+          </span>
+          <span>Creation Date</span>
+        </button>
+        <button class="button is-small sort-button2" (click)="sortbyTitle()">
+          <span class="icon is-small">
+            <i class="fa fa-sort"></i>
+          </span>
+          <span>Title</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- The main tasks board -->
+    <div class="board-wrapper">
+      <div class="board-columns" cdkDropListGroup>
+
+        <!-- TODO column -->
+        <div class="board-column">
+          <div class="column-title">{{ todolist.name }}</div>
+          <div class="task-container" id="todo" cdkDropList #todoList="cdkDropList" [cdkDropListData]="todolist.tasks"
+            (cdkDropListDropped)="drop($event)">
+            <div class="task" *ngFor="let item of todolist.tasks; let i = index" cdkDrag>
+              <div class="firstRow">
+                <div class="is-left" style="font-weight: bold">
+                  {{ item.title }}
+                </div>
+                <div class="buttons has-addons is-right itembutton">
+                  <button class="button is-small" (click)="editTask(item,i)">
+                    <span class="icon">
+                      <i class="fa fa-pencil-square fa-2x"></i>
+                    </span>
+                  </button>
+                  <button class="button is-small" (click)="onDelete(i)">
+                    <span class="icon">
+                      <i class="fa fa-trash fa-2x"></i>
+                    </span>
+                  </button>
+                </div>
+              </div>
+              <div class="is-left">
+                No of Attachments - {{ item.attachments }}
+              </div>
+              <div class="is-left">No of Owners - {{ item.owners }}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- IN-PROGRESS column -->
+        <div class="board-column">
+          <div class="column-title">{{ inProgresslist.name }}</div>
+          <div class="task-container" id="inprogress" cdkDropList #todoList="cdkDropList"
+            [cdkDropListData]="inProgresslist.tasks" (cdkDropListDropped)="drop($event)"
+            [cdkDropListEnterPredicate]="inProgressPredicate">
+            <div class="task" *ngFor="let item of inProgresslist.tasks; let i = index" cdkDrag>
+              <div class="firstRow">
+                <div class="is-left" style="font-weight: bold">
+                  {{ item.title }}
+                </div>
+                <div class="buttons has-addons is-right itembutton">
+                  <button class="button is-small" (click)="editTask(item,i)">
+                    <span class="icon">
+                      <i class="fa fa-pencil-square fa-2x"></i>
+                    </span>
+                  </button>
+                  <button class="button is-small" disabled>
+                    <span class="icon">
+                      <i class="fa fa-trash fa-2x"></i>
+                    </span>
+                  </button>
+                </div>
+              </div>
+              <div class="is-left">
+                No of Attachments - {{ item.attachments }}
+              </div>
+              <div class="is-left">No of Owners - {{ item.owners }}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TESTING Column -->
+        <div class="board-column">
+          <div class="column-title">{{ testingList.name }}</div>
+          <div class="task-container" id="testing" cdkDropList #todoList="cdkDropList"
+            [cdkDropListData]="testingList.tasks" (cdkDropListDropped)="drop($event)"
+            [cdkDropListEnterPredicate]="inTestingPredicate">
+            <div class="task" *ngFor="let item of testingList.tasks; let i = index" cdkDrag>
+              <div class="firstRow">
+                <div class="is-left" style="font-weight: bold">
+                  {{ item.title }}
+                </div>
+                <div class="buttons has-addons is-right itembutton">
+                  <button class="button is-small" (click)="editTask(item,i)">
+                    <span class="icon">
+                      <i class="fa fa-pencil-square fa-2x"></i>
+                    </span>
+                  </button>
+                  <button class="button is-small" disabled>
+                    <span class="icon">
+                      <i class="fa fa-trash fa-2x"></i>
+                    </span>
+                  </button>
+                </div>
+              </div>
+              <div class="is-left">
+                No of Attachments - {{ item.attachments }}
+              </div>
+              <div class="is-left">No of Owners - {{ item.owners }}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Attempt on making the task board columns dynamic. But could not achieve it because of indiviual set of properties on each board column -->
+
+        <!-- <div class="board-column" *ngFor="let column of board.columns">
+          <div class="column-title">{{ column.name }}</div>
+          <div class="task-container" cdkDropList #todoList="cdkDropList" [cdkDropListData]="column.tasks"
+            (cdkDropListDropped)="drop($event)"
+            [cdkDropListEnterPredicate]="inProgressPredicate">
+            <div class="task" *ngFor="let item of column.tasks" cdkDrag>
+              <div class="firstRow">
+                <div class="is-left" style="font-weight: bold">
+                  {{ item.title }}
+                </div>
+                <div class="buttons has-addons is-right itembutton">
+                  <button class="button is-small">
+                    <span class="icon">
+                      <i class="fa fa-pencil-square fa-2x"></i>
+                    </span>
+                  </button>
+                  <button class="button is-small"  disabled>
+                    <span class="icon">
+                      <i class="fa fa-trash fa-2x"></i>
+                    </span>
+                  </button>
+                </div>
+              </div>
+              <div class="is-left">No of Attachments - {{ item.Task2 }}</div>
+              <div class="is-left">No of Owners - {{ item.Task3 }}</div>
+            </div>
+          </div>
+        </div> -->
+
+        <!-- DONE Column -->
+        <div class="board-column">
+          <div class="column-title">{{ doneList.name }}</div>
+          <div class="task-container" id="done" cdkDropList #todoList="cdkDropList" [cdkDropListData]="doneList.tasks"
+            (cdkDropListDropped)="drop($event)" [cdkDropListEnterPredicate]="inDonePredicate">
+            <div class="task" *ngFor="let item of doneList.tasks" cdkDrag [cdkDragDisabled]="item">
+              <div class="firstRow">
+                <div class="is-left" style="font-weight: bold">
+                  {{ item.title }}
+                </div>
+              </div>
+              <div class="is-left">No of Attachments - {{ item.attachments }}</div>
+              <div class="is-left">No of Owners - {{ item.owners }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
